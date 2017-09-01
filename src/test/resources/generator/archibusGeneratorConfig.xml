@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+	<context id="sqlserverContext" targetRuntime="MyBatis3Simple" defaultModelType="flat">
+		<!-- 指定生成的java文件的编码,没有直接生成到项目时中文可能会乱码 -->
+        <property name="javaFileEncoding" value="UTF-8"/>
+		
+        
+		<plugin type="com.cn.vanke.persistence.sql.MapperPlugin">
+			<property name="mappers" value="com.cn.vanke.persistence.mybatis.Mapper" />
+			 <!-- caseSensitive默认false，当数据库表名区分大小写时，可以将该属性设置为true -->
+			<property name="caseSensitive" value="false" />
+			<!-- 是否支持生成swaggerApi格式的JavaBean -->
+			<property name="isSupportSwaggerApi" value="true" />
+		</plugin>
+		
+		<commentGenerator type="com.cn.vanke.persistence.sql.MapperCommentGenerator">
+			<!-- 此处设置无效，不知道什么原因
+			所以如果需要设置是否支持swaggerApi
+			暂时需要手动在MapperCommentGenerator类中构造方法中MapperCommentGenerator设置isSupportSwaggerApi的值
+			 -->
+	   	 	<property name="isSupportSwaggerApi" value="true" />
+		</commentGenerator>
+	
+        <!-- 数据库的连接方式，需要根据实际进行变更 -->
+		<jdbcConnection driverClass="com.microsoft.sqlserver.jdbc.SQLServerDriver"
+           connectionURL="jdbc:sqlserver://127.0.0.1:1433;databaseName=vanke_evolution" 
+           userId="afm"
+           password="afm">
+		</jdbcConnection>
+		
+		<!-- 默认false，把JDBC DECIMAL和 NUMERIC 类型解析为 Integer，为 true时把JDBC DECIMAL和
+           NUMERIC 类型解析为java.math.BigDecimal -->
+       <javaTypeResolver>
+           <property name="forceBigDecimals" value="false"/>
+       </javaTypeResolver>
+       
+		<!-- 下面参数实际使用中均需要修改 -->
+        <!-- 实体生成位置 -->
+		<javaModelGenerator targetPackage="com.cn.vanke.entity"
+			targetProject="D:\DevelopEnvironment\workspace\vanke-ai\src\main\java" />
+		<!-- Mapper.xml存放位置 -->
+		<sqlMapGenerator targetPackage="mybatis.archibus"
+			targetProject="D:\DevelopEnvironment\workspace\vanke-ai\src\main\resources" />
+        <!-- Mapper接口生成位置 -->
+		<javaClientGenerator targetPackage="com.cn.vanke.dao.archibus"
+			targetProject="D:\DevelopEnvironment\workspace\vanke-ai\src\main\java" type="XMLMAPPER" />
+
+        <!-- 需要生成的表 -->
+		<table tableName="site_vn" domainObjectName="SiteCompany" alias="">
+			<generatedKey column="id" sqlStatement="JDBC"/>
+		</table>
+	</context>
+</generatorConfiguration>

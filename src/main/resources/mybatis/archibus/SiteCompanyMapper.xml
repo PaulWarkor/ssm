@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cn.vanke.dao.archibus.SiteCompanyMapper" >
+  <resultMap id="BaseResultMap" type="com.cn.vanke.entity.SiteCompany" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="site_id" property="siteId" jdbcType="VARCHAR" />
+    <result column="vn_id" property="vnId" jdbcType="VARCHAR" />
+    <result column="company" property="company" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <select id="query" resultMap="BaseResultMap" parameterType="java.util.Map">
+	select id,site_id,vn_id,company from site_vn
+	<where>
+		<if test="queryName !=null and queryName !='' and queryValue != null and queryValue != ''">
+			${queryName} = #{queryValue}
+		</if>
+	</where>
+  </select>
+</mapper>

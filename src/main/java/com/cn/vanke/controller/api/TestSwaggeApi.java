@@ -40,7 +40,7 @@ public class TestSwaggeApi extends IBaseController{
 			@ApiParam(value = "项目名称",required = true) @PathVariable("p_Name") String projectName,
 			@ApiParam(value = "日期(yyyy-MM-dd)",required = true) @PathVariable("format_Date") @DateTimeFormat(pattern = "yyyy-MM-dd") Date formatDate) {
 		String model = "编码格式 : " + super.getRequest().getCharacterEncoding().toString() + "\n";
-		model += "信息模版  : " + entityTemplate.toString() + "\n";
+		model += "信息模版1  : " + entityTemplate.toString() + "\n";
 		model += "项目编码  : " + projectCode;
 		model += "\n";
 		model += "项目名称  : " + projectName;

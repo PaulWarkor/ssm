@@ -69,6 +69,11 @@
         <property name="configLocation" value="classpath:mybatis/mybatis-config.xml"/>
         <property name="plugins">
         	<array>
+        		<bean class="com.cn.vanke.page.interceptor.PagerInterceptor">
+        			<property name="properties">
+						<value>dialect=mysql</value>
+					</property>
+        		</bean>
         		<bean class="com.cn.vanke.persistence.mybatis.MapperInterceptor">
         			<property name="properties">
 						<value>mappers=com.cn.vanke.persistence.mybatis.Mapper</value>
@@ -140,6 +145,20 @@
         <property name="mapperLocations" value="classpath*:mybatis/archibus/*.xml"/>
         <property name="dataSource" ref="archibusDruidDataSource"/>
         <property name="configLocation" value="classpath:mybatis/mybatis-config.xml"/>
+        <property name="plugins">
+        	<array>
+        		<bean class="com.cn.vanke.page.interceptor.PagerInterceptor">
+        			<property name="properties">
+						<value>dialect=sqlserver</value>
+					</property>
+        		</bean>
+        		<bean class="com.cn.vanke.persistence.mybatis.MapperInterceptor">
+        			<property name="properties">
+						<value>mappers=com.cn.vanke.persistence.mybatis.Mapper</value>
+					</property>
+        		</bean>
+        	</array>
+        </property>
     </bean>
 
     <bean id="archibusMapperScannerConfigurer" class="org.mybatis.spring.mapper.MapperScannerConfigurer">

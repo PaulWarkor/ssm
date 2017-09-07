@@ -55,7 +55,7 @@ public class EmployeeTbl {
     @Column(name = "singin")
     @JsonProperty(value = "singin")
     @ApiModelProperty(value = "标志")
-    private Byte singin;
+    private String singin;
 
     /**
      * 获取主键ID
@@ -116,7 +116,7 @@ public class EmployeeTbl {
      *
      * @return singin - 标志
      */
-    public Byte getSingin() {
+    public String getSingin() {
         return singin;
     }
 
@@ -125,7 +125,7 @@ public class EmployeeTbl {
      *
      * @param singin 标志
      */
-    public void setSingin(Byte singin) {
+    public void setSingin(String singin) {
         this.singin = singin;
     }
 }

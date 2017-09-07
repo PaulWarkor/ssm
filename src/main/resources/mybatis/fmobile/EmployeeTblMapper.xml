@@ -3,9 +3,9 @@
 <mapper namespace="com.cn.vanke.dao.fmobile.EmployeeTblMapper" >
   <resultMap id="BaseResultMap" type="com.cn.vanke.entity.EmployeeTbl" >
     <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="name" property="name" jdbcType="CHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="date" property="date" jdbcType="TIMESTAMP" />
-    <result column="singin" property="singin" jdbcType="TINYINT" />
+    <result column="singin" property="singin" jdbcType="VARCHAR" />
   </resultMap>
   
   <select id="query" resultMap="BaseResultMap" parameterType="java.util.Map">
@@ -15,5 +15,9 @@
 			${queryName} = #{queryValue}
 		</if>
 	</where>
+  </select>
+  
+  <select id = "queryDataByPage" parameterType="com.cn.vanke.page.domain.Pager" resultMap="BaseResultMap">
+  		select * from employee_tbl where name like '${queryParams.value}%'
   </select>
 </mapper>

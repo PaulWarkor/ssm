@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.cn.vanke.dao.fmobile.EmployeeTblMapper;
 import com.cn.vanke.entity.EmployeeTbl;
+import com.cn.vanke.page.domain.Pager;
 import com.cn.vanke.persistence.sql.SqlMapper;
 import com.cn.vanke.service.EmployeeTblService;
 
@@ -28,6 +29,10 @@ public class EmployeeTblServiceImpl  implements EmployeeTblService {
 	@Override
 	public int insertIntoObject(EmployeeTbl emloyeeTbl) {
 		return fMobileSqlMapper.insert("insert into employee_tbl(name,date,singin) values('小王9',SYSDATE(),'9')");
-		//return this.employeeTblMapper.insert(emloyeeTbl);
+	}
+
+	@Override
+	public List<Map<String, Object>> queryDataByPage(Pager<Map<String,Object>> pager) {
+		return this.employeeTblMapper.queryDataByPage(pager);
 	}
 }

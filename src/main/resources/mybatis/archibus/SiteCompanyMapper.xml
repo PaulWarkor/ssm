@@ -16,4 +16,12 @@
 		</if>
 	</where>
   </select>
+  
+  <select id = "queryDataByPage" parameterType="com.cn.vanke.page.domain.Pager" resultMap="BaseResultMap">
+  		select * from site_vn where site_id = '${queryParams.value}'
+  </select>
+  
+  <select id = "queryBeanDataByPage" parameterType="com.cn.vanke.page.domain.Pager" resultMap="BaseResultMap">
+  		select * from site_vn where site_id = '${queryParams.value}'
+  </select>
 </mapper>

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.cn.vanke.entity.SiteCompany;
+import com.cn.vanke.page.domain.Pager;
 
 public interface SiteCompanyService {
 
@@ -20,4 +21,18 @@ public interface SiteCompanyService {
 	 * @return
 	 */
 	public int insertIntoObject(SiteCompany siteCompany);
+	
+	/***
+	 * 分页查询
+	 * @param pager
+	 * @return
+	 */
+	public List<Map<String,Object>> queryDataByPage(Pager<Map<String,Object>> pager);
+	
+	/***
+	 * 通过封装JavaBean分页查询
+	 * @param pager
+	 * @return
+	 */
+	public List<SiteCompany> queryBeanDataByPage(Pager<SiteCompany> pager);
 }

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.cn.vanke.entity.EmployeeTbl;
+import com.cn.vanke.page.domain.Pager;
 
 public interface EmployeeTblService {
 
@@ -20,4 +21,11 @@ public interface EmployeeTblService {
 	 * @return
 	 */
 	public int insertIntoObject(EmployeeTbl emloyeeTbl);
+	
+	/***
+	 * 分页查询
+	 * @param pageParams
+	 * @return
+	 */
+	public List<Map<String,Object>> queryDataByPage(Pager<Map<String,Object>> pager);
 }

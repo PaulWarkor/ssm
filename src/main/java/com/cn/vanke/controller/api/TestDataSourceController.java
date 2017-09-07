@@ -1,5 +1,6 @@
 package com.cn.vanke.controller.api;
 
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
@@ -27,8 +28,9 @@ import com.cn.vanke.service.SiteCompanyService;
 import com.cn.vanke.util.JsonUtils;
 
 @RestController
-public class DataSourceController extends IBaseController {
-	private static final Logger logger = LoggerFactory.getLogger(DataSourceController.class);
+@Api(value = "多数据源查询、更新测试模板",description = "多数据源查询、更新测试模板")
+public class TestDataSourceController extends IBaseController {
+	private static final Logger logger = LoggerFactory.getLogger(TestDataSourceController.class);
 	private static final String DATASOURCE_ARCHIBUS = "archibus";
 	private static final String DATASOURCE_FMOBILE = "fmobile";
 	

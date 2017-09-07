@@ -40,4 +40,9 @@ public class SiteCompanyServiceImpl implements SiteCompanyService {
 	public List<SiteCompany> queryBeanDataByPage(Pager<SiteCompany> pager) {
 		return this.siteCompanyMapper.queryBeanDataByPage(pager);
 	}
+
+	@Override
+	public Pager<SiteCompany> queryPagerBeanBySqlMaper(Pager<SiteCompany> pager,String sql) {
+		return this.archibusSqlMapper.selectListByPager(sql, SiteCompany.class, pager);
+	}
 }

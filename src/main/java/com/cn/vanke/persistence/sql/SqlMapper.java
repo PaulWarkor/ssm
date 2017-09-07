@@ -1,15 +1,24 @@
 package com.cn.vanke.persistence.sql;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.builder.StaticSqlSource;
 import org.apache.ibatis.exceptions.TooManyResultsException;
-import org.apache.ibatis.mapping.*;
+import org.apache.ibatis.mapping.MappedStatement;
+import org.apache.ibatis.mapping.ResultMap;
+import org.apache.ibatis.mapping.ResultMapping;
+import org.apache.ibatis.mapping.SqlCommandType;
+import org.apache.ibatis.mapping.SqlSource;
 import org.apache.ibatis.scripting.LanguageDriver;
 import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.SqlSession;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import com.cn.vanke.constants.Constants;
+import com.cn.vanke.page.dialect.Dialect;
+import com.cn.vanke.page.dialect.DialectFactory;
+import com.cn.vanke.page.domain.Pager;
 
 
 /**
@@ -19,17 +28,18 @@ import java.util.Map;
  * SqlMapper.java
  */
 public class SqlMapper {
-
 	private final MSUtils msUtils;
 	private final SqlSession sqlSession;
+	private String dialect;
 
 	/**
 	 * 构造方法，默认缓存MappedStatement
 	 * @param sqlSession
 	 */
-	public SqlMapper(SqlSession sqlSession) {
+	public SqlMapper(SqlSession sqlSession,String dialect) {
 		this.sqlSession = sqlSession;
 		this.msUtils = new MSUtils(sqlSession.getConfiguration());
+		this.dialect = dialect;
 	}
 
 	/**
@@ -118,6 +128,33 @@ public class SqlMapper {
 		return sqlSession.selectList(msId, value);
 	}
 
+	/***
+	 * 分页查询Pager<JavaBean>
+	 * @param sql 执行sql
+	 * @param classType JavaBean类名 (example:User.class)
+	 * @param pager 分页组件
+	 * @return 返回Pager<JavaBean>
+	 */
+	public <T> Pager<T> selectListByPager(String sql,Class<T> classType,Pager<T> pager){
+		if(this.setPagerTotalCount(sql, pager)){
+			pager.setData(this.selectList(this.getPagerSql(pager, sql), classType));
+		}
+		return pager;
+	}
+	
+	/***
+	 * 分页查询Pager<Map<String,Object>>
+	 * @param sql 执行sql
+	 * @param pager 分页组件
+	 * @return 返回Pager<Map<String,Object>>
+	 */
+	public Pager<Map<String,Object>> selectListByPager(String sql,Pager<Map<String,Object>> pager){
+		if(this.setPagerTotalCount(sql, pager)){
+			pager.setData(this.selectList(this.getPagerSql(pager, sql), pager.getData()));
+		}
+		return pager;
+	}
+	
 	/**
 	 * 查询返回指定的结果类型
 	 * @param sql 执行的sql
@@ -404,5 +441,37 @@ public class SqlMapper {
 			newUpdateMappedStatement(msId, sqlSource, SqlCommandType.DELETE);
 			return msId;
 		}
+	}
+	
+	/***
+	 * sqlMapper查询数据总数
+	 * @param sql
+	 * @param pager
+	 * @return
+	 */
+	public <T> boolean setPagerTotalCount(String sql, Pager<T> pager){
+		Object obj = this.selectOne(this.getCountSql(sql)).get(Constants.PAGER_SQL_TOTAL_NUM);
+		pager.setTotalCount(Long.valueOf(obj.toString()));
+		return Long.valueOf(obj.toString()) > 0 ? true : false;
+	}
+	
+	/***
+	 * 获取分页sql
+	 * @param pager
+	 * @param sql
+	 * @return
+	 */
+	private String getPagerSql(Pager<?> pager,String sql){
+		Dialect dialect = DialectFactory.driveDialect(this.dialect.toUpperCase());
+		return dialect.buildPageSQL(sql, pager.getPageIndex(),pager.getPageSize());
+	}
+	
+	/***
+	 * 获取总数的sql
+	 * @param sql
+	 * @return
+	 */
+	public String getCountSql(String sql){
+		return "select count(1) as " + Constants.PAGER_SQL_TOTAL_NUM + " from (" + sql + ") t_count";
 	}
 }

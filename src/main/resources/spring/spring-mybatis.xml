@@ -95,7 +95,8 @@
 
 	<!-- 初始化fMobileSqlMapper 执行sql -->
 	<bean id="fMobileSqlMapper" class="com.cn.vanke.persistence.sql.SqlMapper" scope="prototype">
-		<constructor-arg ref="fMobileSqlSession" />
+		<constructor-arg ref="fMobileSqlSession" index="0"/>
+		<constructor-arg value="mysql" index = "1" />
 	</bean>
     <!-- master数据源 end-->
 
@@ -172,7 +173,8 @@
 
 	<!-- 初始化fMobileSqlMapper 执行sql -->
 	<bean id="archibusSqlMapper" class="com.cn.vanke.persistence.sql.SqlMapper" scope="prototype">
-		<constructor-arg ref="archibusSqlSession" />
+		<constructor-arg ref="archibusSqlSession" index="0"/>
+		<constructor-arg value="sqlserver" index = "1" />
 	</bean>
     <!-- archibus数据源 end-->
 </beans>

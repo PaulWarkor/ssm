@@ -35,4 +35,12 @@ public interface SiteCompanyService {
 	 * @return
 	 */
 	public List<SiteCompany> queryBeanDataByPage(Pager<SiteCompany> pager);
+	
+	/***
+	 * 通过sqlMapper查询分页信息
+	 * @param pager
+	 * @param sql
+	 * @return
+	 */
+	public Pager<SiteCompany> queryPagerBeanBySqlMaper(Pager<SiteCompany> pager ,String sql);
 }

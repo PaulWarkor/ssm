@@ -35,4 +35,9 @@ public class EmployeeTblServiceImpl  implements EmployeeTblService {
 	public List<Map<String, Object>> queryDataByPage(Pager<Map<String,Object>> pager) {
 		return this.employeeTblMapper.queryDataByPage(pager);
 	}
+
+	@Override
+	public Pager<Map<String, Object>> queryPagerMapSqlMapper(Pager<Map<String, Object>> pager, String sql) {
+		return this.fMobileSqlMapper.selectListByPager(sql,pager);
+	}
 }

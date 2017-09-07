@@ -15,9 +15,9 @@ public class ApplicationConfig extends PropertyPlaceholderConfigurer {
     private static Properties properties;
 
     @Override
-    protected void processProperties(ConfigurableListableBeanFactory beanFactoryToProcess, Properties properties) throws BeansException {
-        super.processProperties(beanFactoryToProcess, properties);
-        this.properties = properties;
+    protected void processProperties(ConfigurableListableBeanFactory beanFactoryToProcess, Properties pro) throws BeansException {
+        super.processProperties(beanFactoryToProcess, pro);
+        properties = pro;
     }
 
     /**

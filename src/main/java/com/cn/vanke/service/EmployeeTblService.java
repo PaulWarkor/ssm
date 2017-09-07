@@ -28,4 +28,12 @@ public interface EmployeeTblService {
 	 * @return
 	 */
 	public List<Map<String,Object>> queryDataByPage(Pager<Map<String,Object>> pager);
+	
+	/***
+	 * 通过sqlMapper查询分页数据信息
+	 * @param pager
+	 * @param sql
+	 * @return
+	 */
+	public Pager<Map<String,Object>> queryPagerMapSqlMapper(Pager<Map<String,Object>> pager, String sql);
 }

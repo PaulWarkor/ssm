@@ -14,7 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 @Api(value = "测试Controller",description = "测试Controller")
 public class TestController extends IBaseController{
 	private static final Logger logger = LoggerFactory.getLogger(TestController.class);
-	@RequestMapping(value = "/index",method = RequestMethod.POST)
+	@RequestMapping(value = "/index",method = RequestMethod.GET)
 	public ModelAndView showTest(){
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("index");

@@ -9,71 +9,74 @@
 
     <mvc:annotation-driven>
     	<mvc:message-converters register-defaults="true">  
-        <!-- 将StringHttpMessageConverter的默认编码设为UTF-8 -->  
-        <bean class="org.springframework.http.converter.StringHttpMessageConverter">  
-            <constructor-arg value="UTF-8" />  
-            <property name="supportedMediaTypes">
-            	<list>
-                   <bean class="org.springframework.http.MediaType">
-                       <constructor-arg index="0" value="text"/>
-                       <constructor-arg index="1" value="plain"/>
-                       <constructor-arg index="2" value="UTF-8"/>
-                   </bean>
-                   <bean class="org.springframework.http.MediaType">
-                       <constructor-arg index="0" value="*"/>
-                       <constructor-arg index="1" value="*"/>
-                       <constructor-arg index="2" value="UTF-8"/>
-                   </bean>
-               </list>
-            </property>  
-        </bean>  
-        <!-- 将Jackson2HttpMessageConverter的默认格式化输出设为true -->  
-        <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">  
-            <property name="prettyPrint" value="true" />  
-            <property name="supportedMediaTypes">
-            	<list>
-                    <value>text/html;charset=UTF-8</value>
-                    <value>application/json;charset=UTF-8</value>
-                </list>
-            </property>
-            <!--解决日期全局处理相差8个小时的问题  -->
-            <property name="objectMapper">  
-                <bean class="com.fasterxml.jackson.databind.ObjectMapper">  
-                    <!-- 处理responseBody 里面日期类型 -->  
-                    <property name="dateFormat">  
-                        <bean class="java.text.SimpleDateFormat">  
-                            <constructor-arg type="java.lang.String" value="yyyy-MM-dd HH:mm:ss" />  
-                        </bean>  
-                    </property>  
-                    <!-- 时区指定 -->  
-                    <property name="timeZone" value="GMT+8" />  
-                    <!-- 为null字段时不显示 -->  
-                    <property name="serializationInclusion">  
-                        <value type="com.fasterxml.jackson.annotation.JsonInclude.Include">NON_NULL</value>  
-                    </property>  
-                </bean>  
-            </property>  
-        </bean>  
-        <!-- 避免IE执行AJAX时,返回JSON出现下载文件 -->
-        <bean class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter"
-              id="fastJsonHttpMessageConverter">
-            <property name="supportedMediaTypes">
-                <list>
-                    <value>application/json;charset=UTF-8</value>
-                </list>
-            </property>
-        </bean>
-    </mvc:message-converters>
-    
+	        <!-- 将StringHttpMessageConverter的默认编码设为UTF-8 -->  
+	        <bean class="org.springframework.http.converter.StringHttpMessageConverter">  
+	            <constructor-arg value="UTF-8" />  
+	            <property name="supportedMediaTypes">
+	            	<list>
+	                   <bean class="org.springframework.http.MediaType">
+	                       <constructor-arg index="0" value="text"/>
+	                       <constructor-arg index="1" value="plain"/>
+	                       <constructor-arg index="2" value="UTF-8"/>
+	                   </bean>
+	                   <bean class="org.springframework.http.MediaType">
+	                       <constructor-arg index="0" value="*"/>
+	                       <constructor-arg index="1" value="*"/>
+	                       <constructor-arg index="2" value="UTF-8"/>
+	                   </bean>
+	               </list>
+	            </property>  
+	        </bean>  
+	        <!-- 将Jackson2HttpMessageConverter的默认格式化输出设为true -->  
+	        <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">  
+	            <property name="prettyPrint" value="true" />  
+	            <property name="supportedMediaTypes">
+	            	<list>
+	                    <value>text/html;charset=UTF-8</value>
+	                    <value>application/json;charset=UTF-8</value>
+	                </list>
+	            </property>
+	            <!--解决日期全局处理相差8个小时的问题  -->
+	            <property name="objectMapper">  
+	                <bean class="com.fasterxml.jackson.databind.ObjectMapper">  
+	                    <!-- 处理responseBody 里面日期类型 -->  
+	                    <property name="dateFormat">  
+	                        <bean class="java.text.SimpleDateFormat">  
+	                            <constructor-arg type="java.lang.String" value="yyyy-MM-dd HH:mm:ss" />  
+	                        </bean>  
+	                    </property>  
+	                    <!-- 时区指定 -->  
+	                    <property name="timeZone" value="GMT+8" />  
+	                    <!-- 为null字段时不显示 -->  
+	                    <property name="serializationInclusion">  
+	                        <value type="com.fasterxml.jackson.annotation.JsonInclude.Include">NON_NULL</value>  
+	                    </property>  
+	                </bean>  
+	            </property>  
+	        </bean>  
+	        <!-- 避免IE执行AJAX时,返回JSON出现下载文件 -->
+	        <bean class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter"
+	              id="fastJsonHttpMessageConverter">
+	            <property name="supportedMediaTypes">
+	                <list>
+	                    <value>application/json;charset=UTF-8</value>
+	                </list>
+	            </property>
+	        </bean>
+	    </mvc:message-converters>
     </mvc:annotation-driven>
-	<!-- 容器默认的DefaultServletHandler处理 所有静态内容与无RequestMapping处理的URL -->
+	<!-- 容器默认的DefaultServletHttpRequestHandler处理与RequestMapping无关的所有静态内容的URL
+	就类似于一个检查员,针对所有进入DispatcherServlet的URL进行筛查,如果是静态资源,则交给其他servlet进行处理,如果不是静态资源才由DispatcherServlet处理
+	此处功能是SpringMvc将控制交给web应用服务器 -->
     <mvc:default-servlet-handler/>
-	<context:annotation-config/>
+    <!--用于激活那些已经在spring容器里注册过的bean（无论是通过xml的方式还是通过package sanning的方式）上面的注解。  -->
+	<!-- <context:annotation-config/> -->
 
 	<!-- swagger api静态资源匹配 -->
+	<!-- 此处静态资源处理 是SpringMvc自身去处理 -->
 	<mvc:resources mapping="/swagger/**" location="/swagger/" />
 
-
+	<!-- 具有<context:annotation-config>的功能之外，还可以在指定的package下扫描以及注册javabean -->
     <context:component-scan base-package="com.cn.vanke">
         <context:include-filter type="annotation"  expression="org.springframework.web.bind.annotation.RestController"/>
     </context:component-scan>
@@ -82,12 +85,12 @@
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"
           p:prefix="/WEB-INF/view/" p:suffix=".jsp" p:viewClass="org.springframework.web.servlet.view.JstlView"/>
 	<!-- 定义无需Controller的url<->view直接映射 -->
-	<mvc:view-controller path="/" view-name="redirect:/index" />
+	<mvc:view-controller path="/" view-name="main" />
+<!-- 	<mvc:view-controller path="/" view-name="redirect:/index" /> -->
 	<!-- 全局异常处理 -->
     <bean class="com.cn.vanke.common.GlobalExceptionResolver"/>
 	<!-- hibernate validator -->
 	<bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean"/>
-	
 	
 	<!--增加对上传文件的支持 -->
 	<bean id="multipartResolver"

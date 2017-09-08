@@ -19,7 +19,7 @@ public class SpringMvcTest extends BaseJunitTest{
 	@Autowired
 	private EmployeeTblService employeeTblService;
 	
-	//@Test
+	@Test
 	public void testMysql(){
 		Map<String,Object> params = new HashMap<String,Object>();
 		params.put("queryName", "name");
@@ -27,7 +27,7 @@ public class SpringMvcTest extends BaseJunitTest{
 		System.err.println(JsonUtils.object2Json(employeeTblService.query(params)));
 	}
 	
-	//@Test
+	@Test
 	public void testMysqlForPager(){
 		Pager<Map<String,Object>> pager = new Pager<Map<String,Object>>();
 		pager.setPageIndex(2);
@@ -37,7 +37,7 @@ public class SpringMvcTest extends BaseJunitTest{
 		System.err.println(JsonUtils.object2Json(pager));
 	}
 	
-	//@Test
+	@Test
 	public void testSqlserverForPager(){
 		Pager<SiteCompany> pager = new Pager<SiteCompany>();
 		pager.setPageIndex(3);

@@ -4,9 +4,13 @@ import org.apache.log4j.DailyRollingFileAppender;
 import org.apache.log4j.Priority;
 
 public class LogAppender extends DailyRollingFileAppender {
+	
+	/**
+	 * 只判断是否相等，而不判断优先级,用于日志分级输出
+	 * 同时需要在log4j.properties中配置
+	 */
 	@Override
 	public boolean isAsSevereAsThreshold(Priority priority) {
-		// 只判断是否相等，而不判断优先级
-		return this.getThreshold().equals(priority);
+		return super.getThreshold().equals(priority);
 	}
 }

@@ -1,0 +1,93 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:security="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/security
+        http://www.springframework.org/schema/security/spring-security-4.0.xsd">
+
+	  <!-- 配置不过滤的资源（静态资源及登录相关) -->
+    <security:http pattern="/**/*.css" security="none"/>
+    <security:http pattern="/**/*.js" security="none"/>
+    <security:http pattern="/**/*.woff2" security="none"/>
+    <security:http pattern="/**/*.eot" security="none"/>
+    <security:http pattern="/**/*.svg" security="none"/>
+    <security:http pattern="/**/*.ttf" security="none"/>
+    <security:http pattern="/**/*.woff" security="none"/>
+    <security:http pattern="/**/*.ico" security="none"/>
+    <security:http pattern="/**/*.map" security="none"/>
+    <security:http pattern="/**/*.png" security="none"/>
+    <security:http pattern="/**/*.jpg" security="none"/>
+    <security:http pattern="/**/*.jpeg" security="none"/>
+    <security:http pattern="/**/*.gif" security="none"/>
+    <security:http pattern="/**/*.json" security="none"/>
+    <security:http pattern="/" security="none"/>
+    <security:http pattern="/welcome.jsp" security="none"/>
+    <security:http pattern="/login" security="none"/>
+    <security:http pattern="/logout" security="none"/>
+    <security:http pattern="/401" security="none"/>
+    <security:http pattern="/403" security="none"/>
+    
+    <!-- auto-config : 会默认的配置加载十个过滤器 -->
+    <!-- entry-point-ref :  第三方登录入口-->
+    <!-- use-expressions : 默认为false,表示使用表达式,类似于 isAuthenticated()-->
+    <security:http auto-config="true" entry-point-ref= "http403ForbiddenEntryPoint" use-expressions="true">
+    	<!-- 针对于所有的url都要经过认证 -->
+    	<security:intercept-url pattern="/**" access="isAuthenticated()"/>
+    	<security:custom-filter ref="rememberMeAuthenticationFilter" before="REMEMBER_ME_FILTER"/>
+    	<security:custom-filter ref="securityAuthenticationProcessingFilter" before="FORM_LOGIN_FILTER"/>
+    	<security:remember-me user-service-ref="userDetailsService"/>
+        <security:csrf disabled="true"/>
+    </security:http>
+    
+    <bean id="http403ForbiddenEntryPoint" class="com.cn.vanke.authentication.Http403ForbiddenEntryPoint">
+        <property name="redirectUri" value="/"/>
+    </bean>
+    
+    <!-- 鉴权管理器-->
+    <bean id="accessDecisionManager" class="com.cn.vanke.security.SecurityAccessDecisionManager"/>
+    
+    <!-- Cookie认证过滤拦截器 -->
+    <bean id="rememberMeAuthenticationFilter" class="org.springframework.security.web.authentication.rememberme.RememberMeAuthenticationFilter">
+        <constructor-arg name="authenticationManager" ref="authenticationManager"/>
+        <constructor-arg name="rememberMeServices" ref="rememberMeService"/>
+        <property name="authenticationSuccessHandler" ref="securityAuthenticationHandler"/>
+    </bean>
+    
+    <!-- 认证管理器 start-->
+    <security:authentication-manager alias="authenticationManager">
+        <security:authentication-provider user-service-ref="userDetailsService"/>
+    </security:authentication-manager>
+    
+    <bean id="userDetailsService" class="com.cn.vanke.security.service.impl.UserDetailServiceImpl">
+        <property name="cookieName" value="access_token"/>
+    </bean>
+    <!-- 认证管理器 end-->
+    
+    <bean id="rememberMeService" class="com.cn.vanke.security.service.SecurityRememberMeService">
+        <property name="authenticationManager" ref="authenticationManager"/>
+        <property name="oAuthService" ref="oAuthService"/>
+        <property name="cookieName" value="access_token"/>
+    </bean>
+    
+    <bean id="oAuthService" class="com.cn.vanke.security.service.OAuthService"/>
+    <bean id="oAuthConfigService" class="com.cn.vanke.security.service.OAuthConfigService"/>
+    <!-- 认证处理器 -->
+    <bean id="securityAuthenticationHandler" class="com.cn.vanke.security.SecurityAuthenticationHandler">
+        <property name="cookieName" value="access_token"/>
+        <property name="failureRedirectUri" value="/401"/>
+        <property name="successRedirectUri" value="/"/>
+    </bean>
+    
+    <!-- OAuth认证过滤拦截器 -->
+    <bean id="securityAuthenticationProcessingFilter"
+          class="com.cn.vanke.security.SecurityAuthenticationProcessingFilter">
+        <property name="authenticationFailureHandler" ref="securityAuthenticationHandler"/>
+        <property name="authenticationSuccessHandler" ref="securityAuthenticationHandler"/>
+        <property name="authenticationManager" ref="authenticationManager"/>
+        <property name="rememberMeServices" ref="rememberMeService"/>
+        <property name="oAuthService" ref="oAuthService"/>
+        <constructor-arg name="path" value="/oauth/client"/>
+        <property name="cookieName" value="access_token"/>
+    </bean>
+</beans>

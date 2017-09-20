@@ -1,7 +1,8 @@
 package com.cn.vanke.common;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.validation.FieldError;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class ParameterError extends FieldError {
 	/**

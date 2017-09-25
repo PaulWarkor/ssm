@@ -28,6 +28,7 @@ import com.cn.vanke.service.SiteCompanyService;
 import com.cn.vanke.util.JsonUtils;
 
 @RestController
+@RequestMapping("/api")
 @Api(value = "多数据源查询、更新测试模板",description = "多数据源查询、更新测试模板")
 public class TestDataSourceController extends IBaseController {
 	private static final Logger logger = LoggerFactory.getLogger(TestDataSourceController.class);

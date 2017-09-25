@@ -26,7 +26,8 @@ import com.cn.vanke.page.domain.Pager;
 import com.cn.vanke.service.EmployeeTblService;
 import com.cn.vanke.service.SiteCompanyService;
 
-@RestController(value = "/pagerModel")
+@RestController
+@RequestMapping("/api/pagerModel")
 @Api(value = "分页测试模版",description = "分页测试模版")
 public class TestPagerController extends IBaseController{
 

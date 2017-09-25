@@ -7,7 +7,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import com.cn.vanke.security.model.Project;
 import com.cn.vanke.security.model.UserInfo;
-
+/**
+ * Spring安全上下文
+ */
 public class SimpleSecurityContext implements SecurityContext {
 
 	public static String getAccessToken() {

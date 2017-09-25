@@ -28,6 +28,14 @@
     <security:http pattern="/401" security="none"/>
     <security:http pattern="/403" security="none"/>
     
+    <!-- swagger 2.0 资源配置 -->
+    <security:http pattern="/swagger-ui.html" security="none"/>
+    <security:http pattern="/v2/**" security="none"/>
+    <security:http pattern="/configuration/**" security="none"/>
+    <security:http pattern="/swagger-resources" security="none"/>
+    <security:http pattern="/swagger/**" security="none"/>
+    
+    
     <!-- auto-config : 会默认的配置加载十个过滤器 -->
     <!-- entry-point-ref :  第三方登录入口-->
     <!-- use-expressions : 默认为false,表示使用表达式,类似于 isAuthenticated()-->

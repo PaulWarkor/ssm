@@ -18,9 +18,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.cn.vanke.controller.IBaseController;
 
 @RestController
+@RequestMapping("/api")
 @Api(value = "日志的分级输出测试",description = "日志的分级输出测试")
-public class TestLogger extends IBaseController {
-	private static final Logger logger = LoggerFactory.getLogger(TestLogger.class);
+public class TestLoggerController extends IBaseController {
+	private static final Logger logger = LoggerFactory.getLogger(TestLoggerController.class);
 	
 	@RequestMapping(value = "/logger/level/{info}/{debug}/{error}", method = RequestMethod.POST)
 	@ApiOperation(value = "日志的分级输出测试")

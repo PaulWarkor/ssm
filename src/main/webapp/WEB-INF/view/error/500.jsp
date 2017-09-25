@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-    <title>FiMi</title>
+    <title>Demo</title>
     <!--<link rel="stylesheet" href="css/common.css">-->
     <style>
         html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p {

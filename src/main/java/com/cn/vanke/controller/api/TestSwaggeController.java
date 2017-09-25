@@ -22,10 +22,11 @@ import com.cn.vanke.entity.EntityTemplate;
 import com.cn.vanke.util.DateUtils;
 
 @RestController
+@RequestMapping("/api")
 @Api(value = "Api测试模版",description = "Api测试模版")
-public class TestSwaggeApi extends IBaseController{
+public class TestSwaggeController extends IBaseController{
 
-	@RequestMapping(value = "/api/{p_Code}/{format_Date}/{p_Name}", method = RequestMethod.POST)
+	@RequestMapping(value = "/{p_Code}/{format_Date}/{p_Name}", method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.OK)
 	@ApiOperation(value = "参数[字符和时间]测试",produces="application/json")
 	@ApiResponses(value = {

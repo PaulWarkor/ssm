@@ -38,11 +38,21 @@ public class LoginController {
     private HttpServletRequest httpServletRequest;
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
+    public String index(Model model) throws Exception {
+    	return "login";
+    }
+    
+    @RequestMapping(value = "/doLogin", method = RequestMethod.POST)
     public String login(Model model) throws Exception {
-        String state = UUID.randomUUID().toString().replace("-", "");
+        /*String state = UUID.randomUUID().toString().replace("-", "");
         model.addAttribute("state", state);
-        String redirectUrl = "redirect:" + oAuthConfigService.getRedirectUrl(httpServletRequest, null, state);
-        return redirectUrl;
+        String redirectUrl = "redirect:" + oAuthConfigService.getRedirectUrl(httpServletRequest, null, state);*/
+        return "login";
+    }
+    
+    @RequestMapping(value = "/main", method = RequestMethod.GET)
+    public String main(Model model) throws Exception {
+    	return "main";
     }
 
     @RequestMapping(value = "/logout", method = RequestMethod.GET)

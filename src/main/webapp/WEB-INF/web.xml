@@ -74,27 +74,6 @@
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 	
-	<!-- Spring view分发器 -->
-	<servlet>
-		<servlet-name>vanke-ai</servlet-name>
-		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
-		<init-param>
-			<param-name>contextConfigLocation</param-name>
-			<param-value>classpath:spring/springmvc.xml</param-value>
-		</init-param>
-		<load-on-startup>1</load-on-startup>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>vanke-ai</servlet-name>
-		<url-pattern>/</url-pattern>
-	</servlet-mapping>
-
-	<!--session timeOut 30分钟 -->
-	<session-config>
-		<session-timeout>30</session-timeout>
-	</session-config>
-	
-	
 	<servlet-mapping>
 		<servlet-name>default</servlet-name>
 		<url-pattern>*.jpg</url-pattern>
@@ -156,7 +135,27 @@
 		<servlet-name>default</servlet-name>
 		<url-pattern>*.woff2</url-pattern>
 	</servlet-mapping>
-	<!-- 字体相关 结束 -->
+	
+	<!-- Spring view分发器 -->
+	<servlet>
+		<servlet-name>vanke-ai</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>classpath:spring/springmvc.xml</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>vanke-ai</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+
+	<!--session timeOut 30分钟 -->
+	<session-config>
+		<session-timeout>30</session-timeout>
+	</session-config>
+	
 	<!-- 系统异常处理 -->
 	<error-page>
 		<exception-type>java.lang.Exception</exception-type>
